@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@1,800&family=Oxygen:wght@300&display=swap" rel="stylesheet">
+  <title>Weather App</title>
+</head>
+<body>
+  <header>
+    <section>
+      <h1>°<span>WEATHER</span>ized</h1>
+      <form action="">
+        <div>
+          <label for="location-input"></label>
+          <input required class="location-input" type="text"
+          placeholder="Enter location...">
+        </div>
+        <div>
+          <label for="submit"></label>
+          <input type="submit" class="get-weather" value="">
+        </div>
+      </form>
+    </section>
+    <section class="unit">
+      <div>
+        <div class="toggle-switch temp">
+          <div class="toggle-switch-actuator"></div>
+        </div>°C
+      </div>
+      <div>
+        <div class="toggle-switch speed">
+          <div class="toggle-switch-actuator"></div>
+        </div>mph
+      </div>
+    </section>
+  </header>
+  <section class="error">
+    <button class="close-error-btn">×</button>
+    <div class="message">Error message comes here...</div>
+  </section>
+
+  <main></main>
+  
+</body>
+</html>

@@ -1,0 +1,183 @@
+/* Weather DOM stylesheet*/
+@import './weather.css';
+
+/**************************************************
+ * Root styling
+ **************************************************/
+:root {
+  background: url('../images/background.jpg') no-repeat fixed center/cover;
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
+
+  --background1: #fff;
+  --color: #000;
+  --border-radius: 0.6em;
+}
+
+body {
+  flex: 1;
+  background: #fff7;
+  color: #333;
+  margin: 0.5em;
+  padding: 0.4em;
+  border-radius: var(--border-radius);
+  font-family: 'Oxygen', sans-serif;
+}
+
+
+/**************************************************
+ * Header content and header form input
+ **************************************************/
+header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4em;
+}
+
+header h1 {
+  margin: 0.3em 0.2em 0.1em;
+  padding: 0.2em;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.8em;
+  color: #333;
+  text-shadow: 2px 2px 3px #3339;
+}
+
+.unit {
+  text-align: left;
+  color: #333;
+  font-weight: 700;
+  display: flex;
+  margin: 0.4em 0.6em 0.4em 0.4em;
+}
+
+.unit > div {
+  margin: 0 0.8em;
+}
+
+header h1 span {
+  font-size: 1.05em;
+}
+
+form {
+  display: inline-flex;
+  gap: 0;
+  margin: 0.5em 0.8em;
+  padding: 0.1em 0.5em;
+}
+
+form input {
+  padding: 0.2em;
+  font-size: 1.06em;
+  border: none;
+}
+
+form input::placeholder {
+  color: #444;
+  font-style: italic;
+}
+
+.location-input {
+  width: 120px;
+  transition: width .5s ease-in-out .1s;
+  border-bottom: 3px solid #000;
+  color: #000;
+  font-weight: 400;
+  background: transparent;
+  padding: 0.16em;
+}
+
+form input[type="text"]:focus {
+  outline: none;  
+  width: clamp(100px, 250px, 400px);
+}
+
+form input[type="submit"] {
+  background: url('../images/icons/search.svg') no-repeat center;
+  background-size: contain;
+  width: 1.3em;
+  height: 1.3em;
+}
+
+
+/**************************************************
+ * Error popup menu
+ **************************************************/
+.error {
+  display: inline-flex;
+  align-items: center;
+  color: rgb(255, 99, 71);
+  border: 2px solid rgb(255, 99, 71);
+  border-radius: var(--border-radius);
+  margin-left: 0.6em;
+  padding: 0.15em 0.5em;
+  visibility: hidden;
+}
+
+.error .message {
+  display: inline;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.close-error-btn {
+  background: none;
+  color: rgb(255, 99, 71);
+  border: none;
+  display: inline;
+  font-size: 1.6em;
+  margin: 0;
+  margin-right: 0.2em;
+  padding: 0;
+}
+
+.close-error-btn:active {
+  color: #333;
+}
+
+
+/**************************************************
+ * Main:  weather content display styling
+ **************************************************/
+main {
+  display: flex;
+  /* flex-direction: column;
+  align-items: center; */
+  flex-flow: row wrap;
+  flex-basis: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+h4 {
+  margin: 0.1em;
+}
+
+
+/**************************************************
+ * Loading animation
+ **************************************************/
+.loader {
+  background: transparent;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #333 #333 transparent;
+  border-radius: 50%;
+  margin: 2.3em;
+  width: 2em;
+  height: 2em;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

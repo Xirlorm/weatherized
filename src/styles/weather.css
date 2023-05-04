@@ -1,0 +1,62 @@
+.today {
+  text-align: center;
+}
+
+.location {
+  font-weight: 400;
+  font-size: 2em;
+  text-shadow: 2px 2px 3px #3339;
+  margin: 1em;
+}
+
+.condition img {
+  height: 7em;
+  width: 7em;
+  background: #3331;
+  padding: 1em;
+  border-radius: 5em;
+}
+
+.condition {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.today .temperature {
+  font-weight: 500;
+  font-size: 4em;
+  margin: 0;
+  text-shadow: 3px 3px 5px #333a;
+}
+
+.wind > section {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  gap: 1em;
+}
+
+.other {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 1em;
+  text-align: center;
+  margin: 2em;
+}
+
+.forecast {
+  background: #3331;
+  padding: 1.2em 1.6em;
+  margin: 0.8em;
+  border-radius: 2em;
+  text-align: center;
+}
+
+.forecast > * {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-weight: 600;
+  font-style: italic;
+  gap: 1.2em;
+}
