@@ -74,7 +74,6 @@ tempConverter.addEventListener('click', (event) => {
   const forecast = document.querySelectorAll('.forecast-day');
   for (let i = 0; i < forecast.length; ++i) {
     const temp = forecast[i].querySelector('.temperature');
-    alert();
     const temperature =
       weatherReport.forecast.forecastday[i].day['avgtemp_' + tempUnit];
     if (tempUnit === 'c') temp.textContent = `${parseInt(temperature)}°C`;
@@ -94,9 +93,9 @@ speedConverter.addEventListener('click', (event) => {
   else speedUnit = 'kph';
 
   windSpeed.textContent =
-    weatherReport.current['wind_' + speedUnit] + speedUnit.toUpperCase();
+    weatherReport.current['wind_' + speedUnit] + speedUnit;
   gust.textContent =
-    weatherReport.current['gust_' + speedUnit] + speedUnit.toUpperCase();
+    weatherReport.current['gust_' + speedUnit] + speedUnit;
 
   event.stopPropagation();
 });
