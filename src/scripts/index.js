@@ -94,8 +94,7 @@ speedConverter.addEventListener('click', (event) => {
 
   windSpeed.textContent =
     weatherReport.current['wind_' + speedUnit] + speedUnit;
-  gust.textContent =
-    weatherReport.current['gust_' + speedUnit] + speedUnit;
+  gust.textContent = weatherReport.current['gust_' + speedUnit] + speedUnit;
 
   event.stopPropagation();
 });
