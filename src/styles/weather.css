@@ -1,4 +1,4 @@
-.today {
+.current {
   text-align: center;
 }
 
@@ -22,7 +22,7 @@
   font-size: 1.2em;
 }
 
-.today .temperature {
+.current .temperature {
   font-weight: 500;
   font-size: 4em;
   margin: 0;
@@ -37,11 +37,11 @@
 }
 
 .other {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 1em;
   text-align: center;
-  margin: 2em;
+  margin: 1em;
   background: #3331;
   border-radius: 2em;
   padding: 1em;

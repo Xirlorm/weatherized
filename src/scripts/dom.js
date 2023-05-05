@@ -21,7 +21,7 @@ export default {
 
   showWeather(weatherData, units) {
     this.clearWeather();
-    main.appendChild(today(weatherData, units));
+    main.appendChild(currentWeather(weatherData, units));
     main.appendChild(forecast(weatherData.forecast, units.tempUnit));
   },
 
@@ -41,9 +41,9 @@ export default {
  *  Creates all DOM elements using data of current
  *  weather.
  **************************************************/
-function today(weatherData, units) {
+function currentWeather(weatherData, units) {
   const wetherDOM = document.createElement('section');
-  wetherDOM.className = 'today';
+  wetherDOM.className = 'current';
 
   const heading = document.createElement('h4');
   heading.textContent = 'Currently';

@@ -8,15 +8,13 @@ import '../styles/style.css';
 let tempUnit = 'f';
 let speedUnit = 'kph';
 
-// Get and set location input field to 'Accra, Ghana'
-const locationInput = document.querySelector('.location-input');
-locationInput.value = 'Accra, Ghana';
-
 /**************************************************
  * Fetch and display weather report
  *************************************************/
 const queryBtn = document.querySelector('.get-weather');
 queryBtn.addEventListener('click', async (event) => {
+  const locationInput = document.querySelector('.location-input');
+
   if (locationInput.validity.valueMissing === false) {
     showWeather(locationInput.value, { speedUnit, tempUnit });
   } else DOM.showError('Search item not provided');
@@ -59,7 +57,7 @@ function showWeather(query, units) {
 // Temperature unit conversion button
 const tempConverter = document.querySelector('.temp .toggle-switch-actuator');
 tempConverter.addEventListener('click', (event) => {
-  const currentTemp = document.querySelector('.today .temperature');
+  const currentTemp = document.querySelector('.current .temperature');
 
   if (tempUnit === 'f') {
     tempUnit = 'c';
@@ -99,5 +97,5 @@ speedConverter.addEventListener('click', (event) => {
   event.stopPropagation();
 });
 
-showWeather(locationInput.value, { speedUnit, tempUnit });
+showWeather('Accra, Ghana', { speedUnit, tempUnit });
 toggleSwitch.activate();
