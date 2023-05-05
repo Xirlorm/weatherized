@@ -45,6 +45,10 @@ function today(weatherData, units) {
   const wetherDOM = document.createElement('section');
   wetherDOM.className = 'today';
 
+  const heading = document.createElement('h4');
+  heading.textContent = 'Currently';
+  wetherDOM.appendChild(heading);
+
   const childrenDOM = [
     location(weatherData.location),
     condition(weatherData.current.condition),
@@ -61,6 +65,10 @@ function today(weatherData, units) {
 function forecast(weatherData, tempUnit) {
   const forecastDOM = document.createElement('section');
   forecastDOM.className = 'forecast';
+
+  const heading = document.createElement('h4');
+  heading.textContent = 'Forecast';
+  forecastDOM.appendChild(heading);
 
   for (let i = 0; i < weatherData.forecastday.length; ++i) {
     const day = document.createElement('div');
