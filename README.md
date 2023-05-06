@@ -18,10 +18,11 @@ This web app features:
 - CSS
 - JavaScript/TypeScript
 - [Weatherapi](https://weatherapi.com)
-- ### Tooling:
- - Babel
- - Webpack
- - Eslint
- - Prettier
+
+### Tooling:
+- Babel
+- Webpack
+- Eslint
+- Prettier
 
 [Live preview](https://xirlorm.github.io/weatherized/)
