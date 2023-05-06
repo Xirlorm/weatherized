@@ -13,11 +13,11 @@ This web app features:
 - Day time
 - Switching between Temperature and speed units
 
-## Built with:
+## Built using:
 - HTML
 - CSS
 - JavaScript/TypeScript
-- [Weatherapi](https://weatherapi.com)
+- Weatherapi
 
 ### Tooling:
 - Babel
