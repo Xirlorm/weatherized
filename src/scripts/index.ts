@@ -1,8 +1,8 @@
 'use strict';
 
-import DOM from './dom.js';
-import getWeather from './weather.js';
-import toggleSwitch from './toggleSwitch.js';
+import DOM from './dom';
+import { WeatherReport, WeatherError, getWeatherReport } from './weather';
+import toggleSwitch from './toggle-switch';
 import '../styles/style.css';
 
 let tempUnit = 'f';
@@ -11,9 +11,10 @@ let speedUnit = 'kph';
 /**************************************************
  * Fetch and display weather report
  *************************************************/
-const queryBtn = document.querySelector('.get-weather');
+const queryBtn: HTMLElement = document.querySelector('.get-weather');
 queryBtn.addEventListener('click', async (event) => {
-  const locationInput = document.querySelector('.location-input');
+  const locationInput: HTMLInputElement =
+    document.querySelector('.location-input');
 
   if (locationInput.validity.valueMissing === false) {
     showWeather(locationInput.value, { speedUnit, tempUnit });
@@ -33,15 +34,18 @@ closeErrorBtn.addEventListener('click', DOM.closeError);
  * Get weather report of location entered by user
  * and display results.
  *************************************************/
-let weatherReport;
+let weatherReport: WeatherReport | WeatherError;
 
-function showWeather(query, units) {
+function showWeather(
+  query: string,
+  units: { speedUnit: string; tempUnit: string }
+) {
   DOM.loading();
-  const data = getWeather(query);
+  const data = getWeatherReport(query);
   data
     .then((data) => {
       weatherReport = data;
-      DOM.showWeather(data, units);
+      DOM.showWeather(data as WeatherReport, units);
       DOM.closeError();
     })
     .catch((data) => {
@@ -59,23 +63,26 @@ const tempConverter = document.querySelector('.temp .toggle-switch-actuator');
 tempConverter.addEventListener('click', (event) => {
   const currentTemp = document.querySelector('.current .temperature');
 
-  if (tempUnit === 'f') {
-    tempUnit = 'c';
-    const temperature = weatherReport.current.temp_c;
-    currentTemp.textContent = `${parseInt(temperature)}°C`;
-  } else {
-    tempUnit = 'f';
-    const temperature = weatherReport.current.temp_f;
-    currentTemp.textContent = `${parseInt(temperature)}F`;
-  }
+  if ('forecast' in weatherReport) {
+    if (tempUnit === 'f') {
+      tempUnit = 'c';
+      const temperature = `${weatherReport.current.temp_c}`;
+      currentTemp.textContent = `${parseInt(temperature)}°C`;
+    } else {
+      tempUnit = 'f';
+      const temperature = `${weatherReport.current.temp_f}`;
+      currentTemp.textContent = `${parseInt(temperature)}F`;
+    }
 
-  const forecast = document.querySelectorAll('.forecast-day');
-  for (let i = 0; i < forecast.length; ++i) {
-    const temp = forecast[i].querySelector('.temperature');
-    const temperature =
-      weatherReport.forecast.forecastday[i].day['avgtemp_' + tempUnit];
-    if (tempUnit === 'c') temp.textContent = `${parseInt(temperature)}°C`;
-    else temp.textContent = `${parseInt(temperature)}F`;
+    const forecast = document.querySelectorAll('.forecast-day');
+    for (let i = 0; i < forecast.length; ++i) {
+      const temp = forecast[i].querySelector('.temperature');
+      const temperature =
+        weatherReport.forecast.forecastday[i].day['avgtemp_' + tempUnit];
+      if (tempUnit === 'c')
+        temp.textContent = `${parseInt(temperature as string)}°C`;
+      else temp.textContent = `${parseInt(temperature as string)}F`;
+    }
   }
 
   event.stopPropagation();
@@ -84,15 +91,17 @@ tempConverter.addEventListener('click', (event) => {
 // Speed unit conversion button
 const speedConverter = document.querySelector('.speed .toggle-switch-actuator');
 speedConverter.addEventListener('click', (event) => {
-  const windSpeed = document.querySelector('.wind .wind-speed');
-  const gust = document.querySelector('.other .gust');
+  if ('current' in weatherReport) {
+    const windSpeed = document.querySelector('.wind .wind-speed');
+    const gust = document.querySelector('.other .gust');
 
-  if (speedUnit === 'kph') speedUnit = 'mph';
-  else speedUnit = 'kph';
+    if (speedUnit === 'kph') speedUnit = 'mph';
+    else speedUnit = 'kph';
 
-  windSpeed.textContent =
-    weatherReport.current['wind_' + speedUnit] + speedUnit;
-  gust.textContent = weatherReport.current['gust_' + speedUnit] + speedUnit;
+    windSpeed.textContent =
+      weatherReport.current['wind_' + speedUnit] + speedUnit;
+    gust.textContent = weatherReport.current['gust_' + speedUnit] + speedUnit;
+  }
 
   event.stopPropagation();
 });

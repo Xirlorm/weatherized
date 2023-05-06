@@ -4,44 +4,56 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    index: './src/scripts/index.js',
+    index: './src/scripts/index.ts'
   },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
+    clean: true
   },
   devtool: 'inline-source-map',
   devServer: {
-    static: './dist',
+    static: './dist'
   },
   plugins: [
     new htmlWebpackPlugin({
-      template: './src/index.html',
-    }),
+      template: './src/index.html'
+    })
   ],
+  resolve: {
+    modules: [__dirname, 'src', 'node_modules'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
+  },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
-        type: 'asset/resource',
+        exclude: /node_modules/,
+        type: 'asset/resource'
       },
       {
         test: /\.(ttf|eof|otf|woff|woff2)$/i,
-        type: 'asset/resource',
+        exclude: /node_modules/,
+        type: 'asset/resource'
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/i,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ['eslint-loader']
       },
-    ],
+      {
+        test: /\.tsx?$/i,
+        exclude: /node_modules/,
+        use: ['ts-loader' ,'eslint-loader']
+      }
+    ]
   },
   optimization: {
-    runtimeChunk: 'single',
-  },
+    runtimeChunk: 'single'
+  }
 };

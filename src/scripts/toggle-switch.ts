@@ -21,8 +21,17 @@
    activate(properties, DOM);
  ************************************************/
 
+interface Properties {
+  size?: number;
+  background?: {
+    active?: string;
+    actuator?: string;
+    toggleSwitch?: string;
+  };
+}
+
 // Generate and returns new toggle switch dom
-function newBtn(properties) {
+function newBtn(properties: Properties) {
   properties = processProperties(properties);
 
   const toggleSwitch = document.createElement('div');
@@ -39,7 +48,7 @@ function newBtn(properties) {
     properties.size
   );
   actuator.addEventListener('click', (event) => {
-    animate(toggleSwitch, event.target, properties);
+    animate(toggleSwitch, event.target as HTMLDivElement, properties);
   });
 
   toggleSwitch.appendChild(actuator);
@@ -48,8 +57,11 @@ function newBtn(properties) {
 }
 
 // Turns all elements in dom with "toggle-switch" class to switches
-function activate(properties, dom) {
-  let switches;
+function activate(
+  properties: Properties = undefined,
+  dom: HTMLDivElement = undefined
+) {
+  let switches: NodeListOf<HTMLDivElement>;
   properties = processProperties(properties);
 
   if (dom === undefined) {
@@ -64,19 +76,25 @@ function activate(properties, dom) {
       properties.size
     );
 
-    const actuator = switches[i].querySelector('.toggle-switch-actuator');
+    const actuator: HTMLDivElement = switches[i].querySelector(
+      '.toggle-switch-actuator'
+    );
     actuator.style.cssText = actuatorCSS(
       properties.background.actuator,
       properties.size
     );
     actuator.addEventListener('click', (event) => {
-      animate(switches[i], event.target, properties);
+      animate(switches[i], event.target as HTMLDivElement, properties);
     });
   }
 }
 
 // Animate button on when triggered
-function animate(toggleSwitch, actuator, properties) {
+function animate(
+  toggleSwitch: HTMLDivElement,
+  actuator: HTMLDivElement,
+  properties: Properties
+) {
   const margin = actuator.style.marginLeft;
 
   if (margin === '' || margin === `${calc(3 * properties.size)}px`) {
@@ -89,14 +107,14 @@ function animate(toggleSwitch, actuator, properties) {
 }
 
 // Check and fix missing properties
-function processProperties(properties) {
+function processProperties(properties: Properties) {
   const defaultProperties = {
     size: 1.3,
     background: {
       active: '#3af',
       actuator: '#fff',
-      toggleSwitch: '#aaa',
-    },
+      toggleSwitch: '#aaa'
+    }
   };
 
   Object.freeze(defaultProperties);
@@ -104,7 +122,7 @@ function processProperties(properties) {
   if (!properties) {
     properties = structuredClone(defaultProperties);
   } else {
-    if (properties.size) properties.size = calc(properties.size);
+    if (properties.size) properties.size = calc(properties.size) as number;
 
     if (!properties.background) {
       properties.background = defaultProperties.background;
@@ -122,16 +140,16 @@ function processProperties(properties) {
 }
 
 // Precision Calculated values to one decimal point
-function calc(value) {
-  let result = `${value.toFixed(1)}`;
+function calc(value: unknown) {
+  const result = `${(value as number).toFixed(1)}`;
 
-  if (result[result.length - 1] === '0') return parseInt(value);
+  if (result[result.length - 1] === '0') return parseInt(value as string);
 
   return result;
 }
 
 // Get Switch CSS with an adjustment in values
-function switchCSS(bg, size) {
+function switchCSS(bg: string, size: number) {
   return `\
     background: ${bg};
     border-radius: ${10 * size}px;
@@ -146,7 +164,7 @@ function switchCSS(bg, size) {
 }
 
 // Get Actuator CSS with an adjustment in values
-function actuatorCSS(bg, size) {
+function actuatorCSS(bg: string, size: number) {
   return `\
     border-radius: ${12 * size}px;
     background: ${bg};
