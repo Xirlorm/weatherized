@@ -10,19 +10,15 @@ export async function getWeatherReport(
 
   try {
     const response = await fetch(apiUrl, { mode: 'cors' });
-    if (!response.ok) {
-      throw new Error('Network response was not bad');
-    }
-
     const data = await response.json();
 
-    if ('error' in data) {
+    if (!response.ok || 'error' in data) {
       throw new Error(data.error.message);
     }
 
     return data;
   } catch (error) {
-    return { message: (error as Error).message };
+    return Promise.reject({ message: (error as Error).message });
   }
 }
 

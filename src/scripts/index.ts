@@ -1,12 +1,12 @@
 'use strict';
 
 import DOM from './dom';
-import { WeatherReport, WeatherError, getWeatherReport } from './weather';
+import { WeatherReport, getWeatherReport } from './weather';
 import toggleSwitch from './toggle-switch';
 import '../styles/style.css';
 
-let tempUnit = 'f';
-let speedUnit = 'kph';
+let tempUnit: 'c' | 'f' = 'f';
+let speedUnit: 'kph' | 'mph' = 'kph';
 
 /**************************************************
  * Fetch and display weather report
@@ -18,7 +18,7 @@ queryBtn.addEventListener('click', async (event) => {
 
   if (locationInput.validity.valueMissing === false) {
     showWeather(locationInput.value, { speedUnit, tempUnit });
-  } else DOM.showError('Search item not provided');
+  } else DOM.showError('Please provide a location');
 
   event.preventDefault();
 });
@@ -34,18 +34,18 @@ closeErrorBtn.addEventListener('click', DOM.closeError);
  * Get weather report of location entered by user
  * and display results.
  *************************************************/
-let weatherReport: WeatherReport | WeatherError;
+let weatherReport: WeatherReport;
 
 function showWeather(
   query: string,
-  units: { speedUnit: string; tempUnit: string }
+  units: { speedUnit: 'kph' | 'mph'; tempUnit: 'c' | 'f' }
 ) {
   DOM.loading();
   const data = getWeatherReport(query);
   data
     .then((data) => {
-      weatherReport = data;
-      DOM.showWeather(data as WeatherReport, units);
+      weatherReport = data as WeatherReport;
+      DOM.showWeather(weatherReport, units);
       DOM.closeError();
     })
     .catch((data) => {

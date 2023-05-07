@@ -22,12 +22,12 @@ export default {
   },
 
   showWeather(
-    weatherData: WeatherReport,
-    units: { speedUnit: string; tempUnit: string }
+    weatherReport: WeatherReport,
+    units: { speedUnit: 'kph' | 'mph'; tempUnit: 'c' | 'f' }
   ) {
     this.clearWeather();
-    main.appendChild(currentWeather(weatherData, units));
-    main.appendChild(forecast(weatherData.forecast, units.tempUnit));
+    main.appendChild(currentWeather(weatherReport, units));
+    main.appendChild(forecast(weatherReport.forecast, units.tempUnit));
   },
 
   clearWeather() {
@@ -47,7 +47,7 @@ export default {
  *  weather.
  **************************************************/
 function currentWeather(
-  weatherData: WeatherReport,
+  weatherReport: WeatherReport,
   units: { speedUnit: string; tempUnit: string }
 ) {
   const wetherDOM = document.createElement('section');
@@ -58,11 +58,11 @@ function currentWeather(
   wetherDOM.appendChild(heading);
 
   const childrenDOM = [
-    location(weatherData.location),
-    condition(weatherData.current.condition),
-    temperature(weatherData.current, units.tempUnit),
-    wind(weatherData.current, units.speedUnit),
-    other(weatherData.current, units.speedUnit)
+    location(weatherReport.location),
+    condition(weatherReport.current.condition),
+    temperature(weatherReport.current, units.tempUnit),
+    wind(weatherReport.current, units.speedUnit),
+    other(weatherReport.current, units.speedUnit)
   ];
 
   for (const dom of childrenDOM) wetherDOM.appendChild(dom);
@@ -70,7 +70,7 @@ function currentWeather(
   return wetherDOM;
 }
 
-function forecast(weatherData: Forecast, tempUnit: string) {
+function forecast(forecastReport: Forecast, tempUnit: string) {
   const forecastDOM = document.createElement('section');
   forecastDOM.className = 'forecast';
 
@@ -78,21 +78,21 @@ function forecast(weatherData: Forecast, tempUnit: string) {
   heading.textContent = 'Forecast';
   forecastDOM.appendChild(heading);
 
-  for (let i = 0; i < weatherData.forecastday.length; ++i) {
+  for (let i = 0; i < forecastReport.forecastday.length; ++i) {
     const day = document.createElement('div');
     day.className = 'forecast-day';
 
     const temperature = document.createElement('div');
     temperature.className = 'temperature';
     temperature.textContent = `${
-      weatherData.forecastday[i].day['avgtemp_' + tempUnit]
+      forecastReport.forecastday[i].day['avgtemp_' + tempUnit]
     }${tempUnit.toUpperCase()}`;
     const icon = document.createElement('img');
     icon.className = 'icon';
-    icon.src = weatherData.forecastday[i].day.condition.icon;
+    icon.src = forecastReport.forecastday[i].day.condition.icon;
     const date = document.createElement('div');
     date.className = 'date';
-    date.textContent = weatherData.forecastday[i].date;
+    date.textContent = forecastReport.forecastday[i].date;
 
     day.appendChild(temperature);
     day.appendChild(icon);
@@ -132,10 +132,10 @@ function condition(conditionData: { [key: string]: string }) {
 }
 
 // Generate DOM for temperature data
-function temperature(weatherData: Current, tempUnit: string) {
+function temperature(weatherReport: Current, tempUnit: string) {
   const temperatureDOM = document.createElement('div');
   temperatureDOM.textContent = `${
-    weatherData['temp_' + tempUnit]
+    weatherReport['temp_' + tempUnit]
   }${tempUnit.toUpperCase()}`;
   temperatureDOM.className = 'temperature';
 
@@ -143,13 +143,13 @@ function temperature(weatherData: Current, tempUnit: string) {
 }
 
 // Generate DOM for wind data
-function wind(weatherData: Current, speedUnit: string) {
+function wind(weatherReport: Current, speedUnit: string) {
   const windAngle = document.createElement('div');
-  windAngle.textContent = `${weatherData.wind_degree}°`;
+  windAngle.textContent = `${weatherReport.wind_degree}°`;
   const windDir = document.createElement('div');
-  windDir.textContent = weatherData.wind_dir;
+  windDir.textContent = weatherReport.wind_dir;
   const windSpeed = document.createElement('div');
-  windSpeed.textContent = `${weatherData['wind_' + speedUnit]}${speedUnit}`;
+  windSpeed.textContent = `${weatherReport['wind_' + speedUnit]}${speedUnit}`;
   windSpeed.className = 'wind-speed';
 
   const windInfo = document.createElement('section');
@@ -169,7 +169,7 @@ function wind(weatherData: Current, speedUnit: string) {
 }
 
 // Generate DOM for other data
-function other(weatherData: Current, speedUnit: string) {
+function other(weatherReport: Current, speedUnit: string) {
   const container = document.createElement('section');
   container.className = 'other';
 
@@ -181,8 +181,8 @@ function other(weatherData: Current, speedUnit: string) {
     heading.textContent = title[i];
     const value = document.createElement('div');
     if (keys[i] === 'gust_')
-      value.textContent = weatherData[keys[i] + speedUnit] + speedUnit;
-    else value.textContent = weatherData[keys[i]] as string;
+      value.textContent = weatherReport[keys[i] + speedUnit] + speedUnit;
+    else value.textContent = weatherReport[keys[i]] as string;
     value.className = title[i].toLowerCase();
 
     const section = document.createElement('section');
