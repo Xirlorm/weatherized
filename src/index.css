@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background: url('./assets/background.jpg') no-repeat fixed bottom/cover;
+  @apply h-full;
+  @apply inline-flex;
+  @apply flex-col;
+}
+
+
+body {
+  flex: 1;
+  background: #fff7;
+  color: #333;
+  margin: 0.5em;
+  padding: 0.4em;
+  @apply rounded-md
+}

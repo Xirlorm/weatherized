@@ -1,25 +1,6 @@
-'use strict';
-
-export async function getWeatherReport(
-  location: string
-): Promise<WeatherReport | WeatherError> {
-  const apiKey = '7e0540f588d841fb852141356232104';
-  const apiUrl =
-    `https://api.weatherapi.com/v1/forecast.json` +
-    `?key=${apiKey}&q=${location}&days=3`;
-
-  try {
-    const response = await fetch(apiUrl, { mode: 'cors' });
-    const data = await response.json();
-
-    if (!response.ok || 'error' in data) {
-      throw new Error(data.error.message);
-    }
-
-    return data;
-  } catch (error) {
-    return Promise.reject({ message: (error as Error).message });
-  }
+export interface Units {
+  temperature: 'c' | 'f',
+  speed: 'kph' | 'mph',
 }
 
 export interface WeatherError {
