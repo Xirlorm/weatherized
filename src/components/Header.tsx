@@ -1,25 +1,26 @@
 import { Switch, Button } from "antd";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { getWeatherReport } from "../utilities/weatherReport";
 import WeatherContext from "../utilities/Context";
 import { WeatherReport } from "../utilities/types";
 
 function Header() {
-  const [showError, setShowError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const {
       location,
       setLocation,
       units,
       setUnits,
       setReport,
+      errorMsg,
+      setErrorMsg,
+      showError,
+      setShowError,
     } = useContext(WeatherContext);
 
   const getWeather = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    event.stopPropagation();
     setReport(null);
 
     const report = getWeatherReport(location);
@@ -27,7 +28,6 @@ function Header() {
       .then(report => {
         setReport(report as WeatherReport);
         setShowError(false);
-        console.log(report);
       })
       .catch((error: Error) => {
         setErrorMsg(error.message);

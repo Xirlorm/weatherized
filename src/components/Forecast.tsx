@@ -6,11 +6,16 @@ import WeatherContext from "../utilities/Context";
 function Forecast() {
   const {report, units} = useContext(WeatherContext);
 
-  if (report == null) return (<div className="flex justify-center">
-    <div className="bg-white/40 p-4 rounded-2xl shadow-md  shadow-stone-40">
-      <div className="loader"></div>
-    </div>
-  </div>);
+  // Show loader animation
+  if (report == null){
+    return (
+      <div className="flex justify-center">
+        <div className="bg-white/40 p-4 rounded-2xl shadow-md  shadow-stone-40">
+          <div className="loader"></div>
+        </div>
+      </div>
+    );
+  }
 
   return <div className="flex justify-evenly gap-2 flex-wrap items-center my-4">
     <section className="current flex flex-col items-center text-center">
@@ -75,7 +80,10 @@ function Forecast() {
       <h3 className="font-bold text-2xl py-2">Forecast</h3>
       <div className="grid grid-cols-3 gap-4 justify-center text-center">
         {report?.forecast.forecastday.map(entry => (
-            <div className="backdrop-blur-none bg-white/30 rounded-xl p-1.5">
+            <div
+              className="backdrop-blur-none bg-white/30 rounded-xl p-1.5"
+              key={entry.date}
+            >
               <div className="date font-semibold text-2xl">{entry.date.split('-')[2]}</div>
               <img src={entry.day.condition.icon} alt=""  className="m-auto" />
               <div className="font-semibold text-lg">

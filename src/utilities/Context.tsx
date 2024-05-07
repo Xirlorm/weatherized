@@ -8,6 +8,10 @@ const WeatherContext = createContext({
   setLocation: (() => {}) as Dispatch<SetStateAction<string>>,
   units: { temperature: 'c', speed: 'mph', } as Units,
   setUnits: (() => {}) as Dispatch<SetStateAction<Units>>,
+  errorMsg: '',
+  setErrorMsg: (() => {}) as Dispatch<SetStateAction<string>>,
+  showError: false,
+  setShowError: (() => {}) as Dispatch<SetStateAction<boolean>>,
 });
 
 export default WeatherContext;
