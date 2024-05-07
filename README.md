@@ -1,5 +1,8 @@
 # WEATHERized: Web app
 Get the current weather reports.
+
+[Live preview](https://weatherized.vercel.app/)
+
 This web app features:
 
 - Current weather reports of location provided
@@ -26,4 +29,3 @@ This web app features:
 - Eslint
 - Prettier
 
-[Live preview]()
