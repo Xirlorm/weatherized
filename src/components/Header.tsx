@@ -38,7 +38,7 @@ function Header() {
   return <div className="p-3">
     <header className="flex flex-wrap justify-between">
       <section >
-        <h1 className="font-bold text-2xl">°<span>WEATHER</span>ized</h1>
+        <h1 className="font-bold text-2xl"><span>WEATHER</span>ized°</h1>
         <form action="" className="flex"
           onSubmit={event => event.preventDefault()}
         >
